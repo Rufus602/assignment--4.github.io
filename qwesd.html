@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мини-игра</title>
+    <style>
+        .game-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+        
+        .game-container h2 {
+            text-align: center;
+        }
+        
+        .arrow {
+            display: inline-block;
+            cursor: pointer;
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            padding: 5px;
+            transform: rotate(45deg);
+        }
+        
+        .games-link {
+            display: inline-block;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        #game-container {
+            position: relative;
+            width: 500px;
+            height: 400px;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            animation: moveCircle 5s linear infinite;
+        }
+        
+        .small {
+            width: 30px;
+            height: 30px;
+            background-color: #f44336;
+        }
+        
+        .medium {
+            width: 60px;
+            height: 60px;
+            background-color: #2196f3;
+        }
+        
+        .large {
+            width: 90px;
+            height: 90px;
+            background-color: #4caf50;
+        }
+
+        #score {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        @keyframes moveCircle {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(500px, 300px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+    </style>
+    <link href="css/style.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free Website Template" name="keywords">
+        <meta content="Free Website Template" name="description">
+
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar navbar-expand-lg bg-light navbar-light">
+        <div class="container-fluid">
+            <a href="index.html" class="navbar-brand">Nature's Serenade</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav ml-auto">
+                    <a href="#home" class="nav-item nav-link active">Home</a>
+                    <a href="#about" class="nav-item nav-link">About</a>
+                    <a href="#service" class="nav-item nav-link">Service</a>
+                    <a href="portfolio.html" class="nav-item nav-link">Portfolio</a>
+                    <a href="#banner" class="nav-item nav-link">Price</a>
+                    <a href="members.html" class="nav-item nav-link">Team</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>Мой сайт</h2>
+    <div class="games-link">
+        <span class="arrow"></span>
+        <span>Games</span>
+    </div>
+    <div class="game-container">
+        <h2>Мини-игра</h2>
+        <div id="game-container"></div>
+        <div id="score">Счет: 0</div>
+        <audio id="pop-sound" src="pop.mp3"></audio>
+    </div>
+    <script>
+        // JavaScript код
+        var gameContainer = document.getElementById('game-container');
+        var scoreElement = document.getElementById('score');
+        var popSound = document.getElementById('pop-sound');
+        var score = 0;
+
+        // Создание круга
+        function createCircle() {
+            var circle = document.createElement('div');
+            var sizes = ['small', 'medium', 'large'];
+            var size = sizes[Math.floor(Math.random() * sizes.length)];
+
+            circle.classList.add('circle', size);
+            circle.style.top = Math.random() * (gameContainer.offsetHeight - circle.offsetHeight) + 'px';
+            circle.style.left = Math.random() * (gameContainer.offsetWidth - circle.offsetWidth) + 'px';
+
+            circle.addEventListener('click', function() {
+                score++;
+                scoreElement.textContent = 'Счет: ' + score;
+                popSound.currentTime = 0;
+                popSound.play();
+                circle.style.animation = 'pop 0.3s forwards';
+                setTimeout(function() {
+                    gameContainer.removeChild(circle);
+                }, 300);
+            });
+
+            gameContainer.appendChild(circle);
+        }
+
+        // Генерация движущихся кругов
+        setInterval(createCircle, 1000);
+
+        document.querySelector('.games-link').addEventListener('click', function() {
+            document.querySelector('.game-container').style.display = 'block';
+        });
+    </script>
+    <style>
+        @keyframes pop {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+
+<!-- Back to top button -->
+<a href="#" class="btn back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+
+<!-- Pre Loader -->
+<div id="loader" class="show">
+    <div class="loader"></div>
+</div>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/typed/typed.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+</html>
+
